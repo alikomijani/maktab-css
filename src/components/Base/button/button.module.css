@@ -1,0 +1,35 @@
+.button {
+  padding: 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 0.25rem;
+}
+
+.contained {
+  background-color: green;
+  color: white;
+  border: 1px solid green;
+}
+.link {
+  background-color: white;
+  color: green;
+  border: unset;
+}
+.outlined {
+  background-color: white;
+  color: green;
+  border: 1px solid green;
+}
+
+.link:hover {
+  color: black;
+}
+.outlined:hover {
+  background-color: green;
+  color: white;
+}
+.contained:hover {
+  background-color: darkgreen;
+  color: white;
+  border: 1px solid green;
+}

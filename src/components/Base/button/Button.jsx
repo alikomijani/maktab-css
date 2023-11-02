@@ -1,21 +1,24 @@
 import React from "react";
-
-export function Button({ style, children, ...restProps }) {
+import PropTypes from "prop-types";
+import style from "./button.module.css";
+export function Button({
+  variant = "contained",
+  className = "",
+  children,
+  ...restProps
+}) {
   return (
     <button
       {...restProps}
-      style={{
-        padding: "1rem",
-        fontSize: "1rem",
-        cursor: "pointer",
-        borderRadius: ".25rem",
-        backgroundColor: "white",
-        color: "green",
-        border: "1px solid green",
-        ...style,
-      }}
+      className={`${style.button} ${style[variant]} ${className}`}
     >
       {children}
     </button>
   );
 }
+
+Button.propTypes = {
+  variant: PropTypes.oneOf(["contained", "link", "outlined"]),
+  className: PropTypes.string,
+  children: PropTypes.node,
+};

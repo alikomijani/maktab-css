@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, TableRow, TableCell } from "../../Base";
+import { Table, TableRow, TableCell } from "../../base";
 export function ProductTable() {
   return (
     <Table>
