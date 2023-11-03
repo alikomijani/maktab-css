@@ -1,10 +1,19 @@
 import React from "react";
-import { Button, Table, TableCell, TableRow } from "../../base";
+import { Button, Search, Table, TableCell, TableRow } from "../../base";
 import style from "./user-table.module.css";
+import styled from "styled-components";
+
+const FlexDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 export function UsersTable() {
   return (
     <div>
-      <Button className={style.button}>create new user</Button>
+      <FlexDiv>
+        <Search />
+        <Button className={style.button}>create new user</Button>
+      </FlexDiv>
       <Table>
         <thead>
           <TableRow>
@@ -15,7 +24,7 @@ export function UsersTable() {
           </TableRow>
         </thead>
         <tbody>
-          <TableRow>
+          <TableRow $dark>
             <TableCell>1</TableCell>
             <TableCell>komijani</TableCell>
             <TableCell>Ali</TableCell>

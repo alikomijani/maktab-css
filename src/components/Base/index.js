@@ -1,4 +1,5 @@
 export * from "./button";
 export * from "./table";
-export * from "./table-cell/TableCell";
-export * from "./table-row/TableRow";
+export * from "./table-cell";
+export * from "./table-row";
+export * from "./search";
