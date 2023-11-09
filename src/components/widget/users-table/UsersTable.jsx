@@ -7,11 +7,8 @@ const FlexDiv = styled.div`
   justify-content: space-between;
 `;
 const ColumnNames = ["ID", "Username", "First name", "Last name", "action"];
-export function UsersTable({ users, setUsers, setSelectedUser }) {
+export function UsersTable({ users, deleteUser, setSelectedUser }) {
   const [search, setSearch] = useState("");
-  const deleteUser = (user) => {
-    setUsers((oldUsers) => oldUsers.filter((item) => item.id !== user.id));
-  };
 
   return (
     <div>
