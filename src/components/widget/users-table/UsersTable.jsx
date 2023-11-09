@@ -1,20 +1,27 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Search, Table, TableCell, TableRow } from "../../base";
 import style from "./user-table.module.css";
 import styled from "styled-components";
+import { UserContext } from "../../../utils/contexts";
+import { UsersActionType } from "../../../utils/reducers";
 const FlexDiv = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 const ColumnNames = ["ID", "Username", "First name", "Last name", "action"];
-export function UsersTable({ users, deleteUser, setSelectedUser }) {
+export function UsersTable() {
   const [search, setSearch] = useState("");
-
+  const { usersData, dispatchUsers } = useContext(UserContext);
   return (
     <div>
       <FlexDiv>
         <Search value={search} onSubmit={setSearch} />
-        <Button onClick={() => setSelectedUser()} className={style.button}>
+        <Button
+          onClick={() =>
+            dispatchUsers({ type: UsersActionType.SELECT_USER, payload: null })
+          }
+          className={style.button}
+        >
           create new user
         </Button>
       </FlexDiv>
@@ -27,7 +34,7 @@ export function UsersTable({ users, deleteUser, setSelectedUser }) {
           </TableRow>
         </thead>
         <tbody>
-          {users
+          {usersData.users
             .filter((user) => user.first_name.startsWith(search))
             .map((user) => (
               <TableRow $dark key={user.id}>
@@ -36,8 +43,26 @@ export function UsersTable({ users, deleteUser, setSelectedUser }) {
                 <TableCell>{user.first_name}</TableCell>
                 <TableCell>{user.last_name}</TableCell>
                 <TableCell>
-                  <Button onClick={() => setSelectedUser(user)}>Edit</Button>
-                  <Button onClick={() => deleteUser(user)}>Delete</Button>
+                  <Button
+                    onClick={() =>
+                      dispatchUsers({
+                        type: UsersActionType.SELECT_USER,
+                        payload: user,
+                      })
+                    }
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    onClick={() =>
+                      dispatchUsers({
+                        type: UsersActionType.DELETE_USER,
+                        payload: user,
+                      })
+                    }
+                  >
+                    Delete
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

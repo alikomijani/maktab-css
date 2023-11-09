@@ -1,26 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../../base";
+import { UserContext } from "../../../utils/contexts";
+import { UsersActionType } from "../../../utils/reducers";
 
-const initialUser = { id: 1, first_name: "", last_name: "", username: "" };
-export function UserForm({ selectedUser = initialUser, onSubmit }) {
-  const [user, setUser] = useState(selectedUser);
-
+const emptyUser = {
+  id: 1,
+  username: "",
+  first_name: "",
+  last_name: "",
+};
+export function UserForm() {
+  const { usersData, dispatchUsers } = useContext(UserContext);
+  const [user, setUser] = useState(emptyUser);
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(user);
-    setUser({
-      id: 1,
-      first_name: "",
-      last_name: "",
-      username: "",
-    });
+    if (usersData.selectedUser) {
+      dispatchUsers({ type: UsersActionType.UPDATE_USER, payload: user });
+    } else {
+      dispatchUsers({ type: UsersActionType.ADD_USER, payload: user });
+    }
+    setUser(emptyUser);
   };
   const handleInput = (e) => {
     setUser((old) => ({ ...old, [e.target.name]: e.target.value }));
   };
   useEffect(() => {
-    setUser(selectedUser);
-  }, [selectedUser]);
+    setUser(usersData.selectedUser ? usersData.selectedUser : emptyUser);
+  }, [usersData.selectedUser]);
   return (
     <form onSubmit={handleSubmit}>
       <div>
