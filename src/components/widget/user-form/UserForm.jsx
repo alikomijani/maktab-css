@@ -15,9 +15,15 @@ export function UserForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (usersData.selectedUser) {
-      dispatchUsers({ type: UsersActionType.UPDATE_USER, payload: user });
+      dispatchUsers({
+        type: UsersActionType.UPDATE_USER,
+        payload: { ...user, age: usersData.selectedUser.age },
+      });
     } else {
-      dispatchUsers({ type: UsersActionType.ADD_USER, payload: user });
+      dispatchUsers({
+        type: UsersActionType.ADD_USER,
+        payload: { ...user, age: 12 },
+      });
     }
     setUser(emptyUser);
   };
