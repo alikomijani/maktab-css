@@ -1,16 +1,13 @@
-import axios from "axios";
+import { api } from "./api";
 import { useEffect, useState } from "react";
 
 export async function getUsers(username) {
   try {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/users",
-      {
-        params: {
-          username,
-        },
-      }
-    );
+    const response = await api.get("users", {
+      params: {
+        username,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error(error);
@@ -19,10 +16,7 @@ export async function getUsers(username) {
 }
 export async function createUser(user) {
   try {
-    const res = await axios.post(
-      "https://jsonplaceholder.typicode.com/users",
-      user
-    );
+    const res = await api.post("users", user);
     return res.data;
   } catch (error) {
     if (error.response) {
@@ -34,10 +28,7 @@ export async function createUser(user) {
 
 export async function updateUser(userID, user) {
   try {
-    const res = await axios.put(
-      `https://jsonplaceholder.typicode.com/users/${userID}`,
-      user
-    );
+    const res = await api.put(`users/${userID}`, user);
     return res.data;
   } catch (error) {
     if (error.response) {

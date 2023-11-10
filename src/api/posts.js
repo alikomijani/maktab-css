@@ -1,11 +1,9 @@
-import axios from "axios";
+import { api } from "./api";
 import { useEffect, useState } from "react";
 
 export async function getPosts() {
   try {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/posts"
-    );
+    const response = await api.get("posts");
     return response.data;
   } catch (error) {
     console.error(error);
