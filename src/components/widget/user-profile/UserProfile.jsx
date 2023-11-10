@@ -1,13 +1,9 @@
 import React, { memo } from "react";
-import { Button } from "../../base";
 
-export default memo(function UserProfile({ user, sendEmail }) {
-  console.log("render profile--------");
+export default memo(function UserProfile({ user }) {
   if (!user) {
     return null;
   }
-  console.log("render profile--------");
-
   return (
     <div
       style={{
@@ -25,25 +21,6 @@ export default memo(function UserProfile({ user, sendEmail }) {
       <div>username : {user.username}</div>
       <div>first name : {user.first_name}</div>
       <div>last name : {user.last_name}</div>
-      <div>
-        <Button onClick={sendEmail}>Send Email</Button>
-      </div>
     </div>
   );
 });
-
-function isEqual(prevProps, nextProps) {
-  if (prevProps.count === nextProps.count) {
-    return true;
-  }
-  if (prevProps.count > 98 && nextProps.count > 98) {
-    return true;
-  }
-  return false;
-}
-export const Notification = memo(function NotificationBadge({ count }) {
-  if (count > 98) {
-    return <div>{+99}</div>;
-  }
-  return <div>{count}</div>;
-}, isEqual);
