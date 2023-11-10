@@ -1,46 +1,50 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../../base";
-import { UserContext } from "../../../utils/contexts";
-import { UsersActionType } from "../../../utils/reducers";
 
 const emptyUser = {
-  id: 1,
   username: "",
-  first_name: "",
-  last_name: "",
+  name: "",
+  email: "",
 };
-export function UserForm() {
-  const { usersData, dispatchUsers } = useContext(UserContext);
-  const [user, setUser] = useState(emptyUser);
+export function UserForm({ initialValue = emptyUser, onSubmit, ...props }) {
+  const [user, setUser] = useState(initialValue || emptyUser);
+  const [pending, setPending] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (usersData.selectedUser) {
-      dispatchUsers({
-        type: UsersActionType.UPDATE_USER,
-        payload: { ...user, age: usersData.selectedUser.age },
+    setPending(true);
+    onSubmit(user)
+      .then(() => {
+        alert("success");
+        setUser(emptyUser);
+      })
+      .catch((error) => {
+        if (error) {
+          console.log(error.data);
+        }
+      })
+      .finally(() => {
+        setPending(false);
       });
-    } else {
-      dispatchUsers({
-        type: UsersActionType.ADD_USER,
-        payload: { ...user, age: 12 },
-      });
-    }
-    setUser(emptyUser);
   };
   const handleInput = (e) => {
     setUser((old) => ({ ...old, [e.target.name]: e.target.value }));
   };
   useEffect(() => {
-    setUser(usersData.selectedUser ? usersData.selectedUser : emptyUser);
-  }, [usersData.selectedUser]);
+    if (initialValue) {
+      setUser(initialValue);
+    } else {
+      setUser(emptyUser);
+    }
+  }, [initialValue]);
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} {...props}>
       <div>
         <label>
           <span>username</span>
           <input
             type="text"
             name="username"
+            required
             value={user.username}
             onChange={handleInput}
           />
@@ -48,28 +52,30 @@ export function UserForm() {
       </div>
       <div>
         <label>
-          <span>First name</span>
+          <span>name</span>
           <input
             type="text"
-            name="first_name"
-            value={user.first_name}
+            name="name"
+            value={user.name}
             onChange={handleInput}
           />
         </label>
       </div>
       <div>
         <label>
-          <span>Last name</span>
+          <span>email</span>
           <input
-            type="text"
-            name="last_name"
-            value={user.last_name}
+            type="email"
+            name="email"
+            value={user.email}
             onChange={handleInput}
           />
         </label>
       </div>
       <div>
-        <Button type="submit">Save</Button>
+        <Button disabled={pending} type="submit">
+          Save
+        </Button>
       </div>
     </form>
   );

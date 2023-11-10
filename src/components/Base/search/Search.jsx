@@ -7,8 +7,8 @@ const StyledButton = styled.button`
 const StyledInput = styled.input.attrs({ type: "search" })`
   padding: 0.5rem;
 `;
-export function Search({ value = "", onSubmit }) {
-  const [search, setSearch] = useState(value);
+export function Search({ onSubmit }) {
+  const [search, setSearch] = useState("");
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };

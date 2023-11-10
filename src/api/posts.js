@@ -29,3 +29,17 @@ export function useGetPosts() {
     loading,
   };
 }
+// example of custom hook
+export function useCounter(initialValue = 0) {
+  const [counter, setCounter] = useState(initialValue);
+  const increment = () => {
+    setCounter((old) => old + 1);
+  };
+  const decrement = () => {
+    setCounter((old) => old - 1);
+  };
+  const reset = () => {
+    setCounter(0);
+  };
+  return [counter, increment, decrement, reset];
+}

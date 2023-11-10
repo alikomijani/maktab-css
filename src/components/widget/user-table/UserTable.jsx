@@ -13,12 +13,12 @@ export function UsersTable({
   setSelectedUser,
   deleteUser,
   selectedUser,
+  setSearch,
 }) {
-  const [search, setSearch] = useState("");
   return (
     <div>
       <FlexDiv>
-        <Search value={search} onSubmit={setSearch} />
+        <Search onSubmit={setSearch} />
         <Button onClick={() => setSelectedUser(null)} className={style.button}>
           create new user
         </Button>
@@ -32,20 +32,18 @@ export function UsersTable({
           </TableRow>
         </thead>
         <tbody>
-          {users
-            .filter((user) => user.name.startsWith(search))
-            .map((user) => (
-              <TableRow $dark key={user.id}>
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.username}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>
-                  <Button onClick={() => setSelectedUser(user)}>Edit</Button>
-                  <Button onClick={() => deleteUser(user)}>Delete</Button>
-                </TableCell>
-              </TableRow>
-            ))}
+          {users.map((user) => (
+            <TableRow $dark key={user.id}>
+              <TableCell>{user.id}</TableCell>
+              <TableCell>{user.username}</TableCell>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>
+                <Button onClick={() => setSelectedUser(user)}>Edit</Button>
+                <Button onClick={() => deleteUser(user)}>Delete</Button>
+              </TableCell>
+            </TableRow>
+          ))}
         </tbody>
       </Table>
       <UserProfile user={selectedUser} />
