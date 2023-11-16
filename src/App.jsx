@@ -1,6 +1,6 @@
 // @ts-nocheck
 import "./App.css";
-import { UserForm, UsersTable } from "./components";
+import { FormikUserForm, UsersTable } from "./components";
 import { useQuery } from "react-query";
 import { createUser, getUsers, updateUser } from "./api";
 import { useState } from "react";
@@ -20,7 +20,7 @@ function App() {
           gap: "15px",
         }}
       />
-      <UserForm
+      <FormikUserForm
         onSubmit={(user) => {
           if (selectedUser) {
             return updateUser(selectedUser.id, user);
