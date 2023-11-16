@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../../base";
 import "./user-form.style.css";
-import { validateUserForm } from "./validation";
+import { validateUserForm } from "./manual-validation";
 import clsx from "clsx";
+import { convertErrors, userSchema } from "./yup-validation";
 const emptyUser = {
   username: "",
   name: "",
@@ -13,16 +14,30 @@ export function UserForm({ initialValue = emptyUser, onSubmit, ...props }) {
   const [user, setUser] = useState(initialValue || emptyUser);
   const [errors, setErrors] = useState({});
   const [pending, setPending] = useState(false);
-  console.log({ errors });
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // setPending(true);
-    const { hasError, fromErrors } = validateUserForm(user);
-    console.log({ hasError, fromErrors });
-    if (hasError) {
-      setErrors(fromErrors);
-      return;
+    //==================start manual validation===================//
+    // const { hasError, fromErrors } = validateUserForm(user);
+    // if (hasError) {
+    //   setErrors(fromErrors);
+    //   return;
+    // }
+    //==================end manual validation===================//
+    //==================start yup validation===================//
+    try {
+      console.log(user);
+      const value = await userSchema.validate(user, {
+        abortEarly: false,
+      });
+      console.log(value);
+      // start submit form
+    } catch (err) {
+      setErrors(convertErrors(err.inner));
     }
+
+    //==================end yup validation===================//
+    // start form submit
     // onSubmit(user)
     //   .then(() => {
     //     alert("success");
@@ -73,6 +88,7 @@ export function UserForm({ initialValue = emptyUser, onSubmit, ...props }) {
             onChange={handleInput}
           />
         </label>
+        {errors.name ? <span className="">{errors.name}</span> : null}
       </div>
       <div className="form-control">
         <label>
@@ -80,28 +96,26 @@ export function UserForm({ initialValue = emptyUser, onSubmit, ...props }) {
           <input
             type="number"
             name="age"
-            max={18}
-            min={10}
             value={user.age}
             onChange={handleInput}
           />
         </label>
+        {errors.age ? <span className="">{errors.age}</span> : null}
       </div>
       <div className="form-control">
         <label>
           <span>email</span>
           <input
-            type="email"
+            type="text"
             name="email"
             value={user.email}
             onChange={handleInput}
           />
         </label>
+        {errors.email ? <span className="">{errors.email}</span> : null}
       </div>
       <div className="form-control">
-        <Button disabled={pending} type="submit">
-          Save
-        </Button>
+        <Button type="submit">Save</Button>
       </div>
     </form>
   );
