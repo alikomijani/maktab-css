@@ -9,21 +9,13 @@ const FlexDiv = styled.div`
   justify-content: space-between;
 `;
 const ColumnNames = ["ID", "Username", "name", "email", "action"];
-export function UsersTable({
-  users,
-  setSelectedUser,
-  deleteUser,
-  selectedUser,
-  setSearch,
-}) {
+export function UsersTable({ users, deleteUser, setSearch }) {
   const navigate = useNavigate();
   return (
     <div>
       <FlexDiv>
         <Search onSubmit={setSearch} />
-        <Button onClick={() => setSelectedUser(null)} className={style.button}>
-          create new user
-        </Button>
+        <Button onClick={() => navigate("create-new")}>create new user</Button>
       </FlexDiv>
       <Table>
         <thead>
@@ -56,7 +48,6 @@ export function UsersTable({
           ))}
         </tbody>
       </Table>
-      <UserProfile user={selectedUser} />
     </div>
   );
 }

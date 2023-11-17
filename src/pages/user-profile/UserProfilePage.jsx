@@ -9,7 +9,7 @@ const emptyUser = {
   age: 0,
 };
 
-function UserProfilePage({}) {
+function UserProfilePage() {
   const [user, setUser] = useState(emptyUser);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
