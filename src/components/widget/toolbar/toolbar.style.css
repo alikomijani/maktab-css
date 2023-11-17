@@ -1,0 +1,23 @@
+.menu {
+  display: flex;
+  justify-content: flex-start;
+  list-style-type: none;
+  padding: 0;
+}
+.menu__item a {
+  padding: 5px 10px;
+}
+
+.menu__item:hover a {
+  background-color: red;
+  color: white;
+}
+
+.menu__item a:visited {
+  color: unset;
+}
+
+.menu__item .active {
+  background-color: red;
+  color: white;
+}

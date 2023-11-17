@@ -26,11 +26,9 @@ export function UserForm({ initialValue = emptyUser, onSubmit, ...props }) {
     //==================end manual validation===================//
     //==================start yup validation===================//
     try {
-      console.log(user);
       const value = await userSchema.validate(user, {
         abortEarly: false,
       });
-      console.log(value);
       // start submit form
     } catch (err) {
       setErrors(convertErrors(err.inner));

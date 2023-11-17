@@ -4,8 +4,8 @@ import "./user-form.style.css";
 import { validateUserForm } from "./manual-validation";
 import clsx from "clsx";
 import { convertErrors, userSchema } from "./yup-validation";
-
 import { useFormik } from "formik";
+
 const formFields = [
   {
     name: "username",

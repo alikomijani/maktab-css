@@ -14,6 +14,16 @@ export async function getUsers(username) {
     throw error;
   }
 }
+
+export async function getUser(userID) {
+  try {
+    const response = await api.get(`/users/${userID}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
 export async function createUser(user) {
   try {
     const res = await api.post("users", user);
